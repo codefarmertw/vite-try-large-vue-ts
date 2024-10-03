@@ -50,33 +50,15 @@ function generateModules(count) {
   }
 }
 
-function generateHash(input) {
-  let hash = 0;
-  const str = input.toString();
-
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash;
-  }
-
-  let hexHash = Math.abs(hash).toString(16);
-  while (hexHash.length < 32) {
-    hexHash = '0' + hexHash;
-  }
-
-  return hexHash.slice(-32);
-}
-
 function generateLargeData(count) {
   const data = [];
   for (let i = 0; i < count; i++) {
-    const id = generateHash(i);
+    const id = crypto.randomUUID();
 
     data.push({
       id: id,
       name: `Item ${id}`,
-      value: Math.floor(Math.random() * 10000)
+      value: crypto.randomUUID()
     });
   }
   return data;
